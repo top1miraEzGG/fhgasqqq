@@ -1,0 +1,21 @@
+
+CREATE TABLE Country ( country_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL UNIQUE );
+
+CREATE TABLE Category ( category_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL UNIQUE );
+
+CREATE TABLE Museum ( museum_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, address TEXT, founded_year INTEGER );
+
+CREATE TABLE Branch ( branch_id INTEGER PRIMARY KEY AUTOINCREMENT, museum_id INTEGER NOT NULL, name TEXT NOT NULL, address TEXT, FOREIGN KEY (museum_id) REFERENCES Museum(museum_id) );
+
+CREATE TABLE Exhibit ( exhibit_id INTEGER PRIMARY KEY AUTOINCREMENT, branch_id INTEGER NOT NULL, category_id INTEGER NOT NULL, country_id INTEGER, inventory_number TEXT UNIQUE, name TEXT NOT NULL, description TEXT, creation_year TEXT, FOREIGN KEY (branch_id) REFERENCES Branch(branch_id), FOREIGN KEY (category_id) REFERENCES Category(category_id), FOREIGN KEY (country_id) REFERENCES Country(country_id) );
+
+-- INSERT INTO Country (name) VALUES ('Россия'), ('Греция'), ('Италия'), ('Скифия');
+
+INSERT INTO Category (name) VALUES ('Археология'), ('Живопись'), ('Нумизматика'), ('Этнография');
+
+INSERT INTO Museum (name, address, founded_year) VALUES ('Центральный музей Тавриды', 'г. Симферополь, пр. Кирова, 13', 1887);
+
+INSERT INTO Branch (museum_id, name, address) VALUES (1, 'Головное подразделение', 'г. Симферополь, пр. Кирова, 13'), (1, 'Дом-музей И. Сельвинского', 'г. Симферополь, ул. Одесская, 15'), (1, 'Алуштинский филиал', 'г. Алушта, ул. Ленина, 8'), (1, 'Мемориал концлагеря «Красный»', 'с. Мирное, ул. Беспалова');
+
+INSERT INTO Exhibit (branch_id, category_id, country_id, inventory_number, name, description, creation_year) VALUES (1, 1, 4, 'АРХ-001', 'Скифская пектораль', 'Золотое нагрудное украшение', 'IV в. до н.э.'), (1, 2, 1, 'ЖИВ-001', '«Морской пейзаж»', 'Картина с видом на море', '1909'), (1, 4, 1, 'ЭТН-001', 'Крымскотатарский костюм', 'Традиционный женский костюм', 'XIX в.'), (2, 1, 2, 'АРХ-002', 'Амфора', 'Греческая амфора для вина', 'V в. до н.э.'), (3, 3, 3, 'НУМ-001', 'Монета Боспорского царства', 'Статер царя Савромата II', '211 г. н.э.');
+SELECT * FROM Museum SELECT * FROM Exhibit SELECT * FROM Branch SELECT * FROM Category SELECT * FROM Country
